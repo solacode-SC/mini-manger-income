@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حساباتي الشهرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f2;--card:#fff;--tx:#2b2926;--mu:#7a746b;--ac:#c1633f;--in:#2f7d4f;--out:#c8503f;--bd:#e6dfd3;--inb:#e8f3ec;--outb:#fbebe8;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f1d1a;--card:#2a2723;--tx:#f1ede6;--mu:#a29b90;--ac:#e08a64;--in:#5fbf86;--out:#ef8a78;--bd:#3d3832;--inb:#22352a;--outb:#3a2623;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1f1d1a;--card:#2a2723;--tx:#f1ede6;--mu:#a29b90;--ac:#e08a64;--in:#5fbf86;--out:#ef8a78;--bd:#3d3832;--inb:#22352a;--outb:#3a2623;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 Tajawal,"Noto Sans Arabic",system-ui,sans-serif}
+#wrap{max-width:1100px;margin:0 auto;padding:16px}
+h1{margin:0 0 12px;font-size:1.7rem}h2{margin:0 0 12px;font-size:1.25rem}h3{margin:24px 0 10px;font-size:1.15rem}
+button,select,input,textarea{font:inherit;color:inherit;border:1px solid var(--bd);background:var(--card);border-radius:12px;padding:10px 14px;min-height:44px}
+button{cursor:pointer}button:hover{border-color:var(--ac)}
+.pri{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:700}
+.big{width:100%;margin-top:12px;font-size:1.2rem;min-height:54px;background:var(--ac);color:#fff;border-color:var(--ac);font-weight:700}
+.bar{display:flex;flex-wrap:wrap;gap:8px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:16px}
+.wd{text-align:center;color:var(--mu);font-weight:700}
+.c{text-align:start;display:flex;flex-direction:column;gap:6px;padding:10px;min-height:104px;border-radius:14px;background:var(--card);border:1px solid var(--bd);min-width:0}
+.c.pos{background:var(--inb);border-color:var(--in)}.c.neg{background:var(--outb);border-color:var(--out)}.c.today{outline:2px solid var(--ac)}
+.c .hd{display:flex;justify-content:space-between;gap:6px;align-items:center;flex-wrap:wrap}.c b{font-size:1.1rem}
+.dn{display:none;color:var(--mu)}.st{font-size:.8rem}.ln{display:flex;flex-direction:column;font-size:.85rem;word-break:break-word}
+.g{color:var(--in)}.rr{color:var(--out)}.mt{color:var(--mu);font-size:.85rem}.pad{visibility:hidden;border:0;background:none}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.cards .num{font-size:1.5rem;font-weight:700;margin-top:4px}.cards small{color:var(--mu)}
+.msg{margin-top:12px;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--bd);font-weight:700}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+th,td{padding:10px 12px;text-align:start;border-bottom:1px solid var(--bd)}th{color:var(--mu)}tbody tr{cursor:pointer}tfoot td{font-weight:700;background:var(--bg)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd)}
+.tag{padding:2px 10px;border-radius:99px;font-size:.8rem}.tag.in{background:var(--inb);color:var(--in)}.tag.out{background:var(--outb);color:var(--out)}
+.ins{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.ins small{display:block;color:var(--mu)}
+.chart{display:flex;gap:6px;overflow-x:auto;padding:8px 0;align-items:flex-end}
+.col{display:flex;flex-direction:column;align-items:center;min-width:26px}.bars{display:flex;align-items:flex-end;gap:2px;height:160px}
+.bars i{display:block;width:10px;border-radius:4px 4px 0 0;min-height:2px}.bi{background:var(--in)}.bo{background:var(--out)}
+.lg{display:flex;gap:16px;flex-wrap:wrap}.lg span:before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-inline-end:6px;background:var(--in)}.lg .o:before{background:var(--out)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+.sh{background:var(--bg);border-radius:20px;max-width:640px;width:100%;max-height:100%;overflow:auto;padding:20px}
+.frm{display:grid;grid-template-columns:1fr 110px;gap:8px;margin-top:10px}.frm .ds,.frm .ct,.frm button,.frm .err{grid-column:1/-1}.err{color:var(--out);font-size:.9rem}
+.act{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.act button{flex:1;min-width:140px}
+textarea{width:100%;min-height:110px;direction:ltr;font-family:monospace;font-size:.8rem}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+@media (max-width:760px){
+.cal{grid-template-columns:1fr}.wd,.pad{display:none}.dn{display:inline}.c{min-height:0}.ln{flex-direction:row;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.cards{grid-template-columns:1fr 1fr}.ins{grid-template-columns:1fr}h1{font-size:1.35rem}
+table,thead,tbody,tfoot,tr,td{display:block}thead{display:none}tr{border:1px solid var(--bd);border-radius:14px;margin-bottom:8px;padding:6px;background:var(--card)}
+td{border:0;display:flex;justify-content:space-between;gap:8px}td[data-l]:before{content:attr(data-l);color:var(--mu)}
+.ov{padding:0;align-items:flex-end}.sh{border-radius:20px 20px 0 0;max-height:94%}.bar select,.bar button{flex:1 1 auto}}
+@media print{.bar,.big,.act,.noprint,.ov{display:none!important}body{background:#fff;color:#000}}
+</style>
+</head>
+<body><div id="wrap"><div id="app"></div></div><div id="dlg"></div>
+<script>
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0'),num=n=>n.toLocaleString('en-US');
+const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const AM=['يناير','فبراير','مارس','أبريل','ماي','يونيو','يوليوز','غشت','شتنبر','أكتوبر','نونبر','دجنبر'];
+const DN=['الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد'];
+const CATS=['الماكلة','النقل','الفواتير','الكراء','مبيعات','خدمة','دخل إضافي','أخرى'];
+let tx=[],days=new Set(),cur='DH',n0=new Date(),ym=[n0.getFullYear(),n0.getMonth()],view='cal',day=null,edit=null,flt={t:'all',d:''},dlg=null,rc=false,bk='';
+/* ---------- storage (IndexedDB) ---------- */
+const dbp=new Promise(res=>{try{const r=indexedDB.open('hisabati',1);r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore('tx',{keyPath:'id'});d.createObjectStore('days',{keyPath:'date'});d.createObjectStore('prefs',{keyPath:'k'})};r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}catch(e){res(null)}});
+const io=(st,mode,fn)=>dbp.then(db=>db?new Promise(res=>{try{const t=db.transaction(st,mode),rq=fn(t.objectStore(st));t.oncomplete=()=>res(rq&&rq.result);t.onerror=()=>res(null)}catch(e){res(null)}}):null);
+const put=(s,v)=>io(s,'readwrite',o=>o.put(v)),del=(s,k)=>io(s,'readwrite',o=>o.delete(k)),all=s=>io(s,'readonly',o=>o.getAll()).then(r=>r||[]),clr=s=>io(s,'readwrite',o=>o.clear());
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+/* ---------- money logic (integer riyals; 1 DH = 20 riyals) ---------- */
+const nz=s=>String(s).trim().replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[،,]/g,'.');
+function toR(s,c){s=nz(s);if(!/^\d+(\.\d+)?$/.test(s))return null;const [i,f='']=s.split('.');
+ if(c=='R')return /[1-9]/.test(f)?null:+i;
+ if(/[1-9]/.test(f.slice(2)))return null;const u=+i*100+ +(f+'00').slice(0,2);return u%5?null:u/5}
+function fmt(r,c=cur){const s=r<0?'-':'';r=Math.abs(r);if(c=='R')return s+num(r)+' ريال';const u=r*5,f=u%100;return s+num(Math.floor(u/100))+(f?'.'+pad(f).replace(/0$/,''):'')+' درهم'}
+const dim=(y,m)=>new Date(y,m+1,0).getDate(),dk=d=>`${ym[0]}-${pad(ym[1]+1)}-${pad(d)}`;
+const dt=k=>tx.filter(t=>t.date==k),S=(l,t)=>l.filter(x=>x.type==t).reduce((a,x)=>a+x.riyals,0),rec=k=>days.has(k)||tx.some(t=>t.date==k);
+function stats(){const N=dim(...ym),a=[];for(let d=1;d<=N;d++){const k=dk(d),l=dt(k),i=S(l,'in'),o=S(l,'out');a.push({d,k,l,i,o,df:i-o,r:rec(k)})}return a}
+/* ---------- views ---------- */
+const sel=(v,x)=>v==x?'selected':'';
+function head(){const yrs=[];for(let y=ym[0]-5;y<=ym[0]+3;y++)yrs.push(`<option ${sel(y,ym[0])}>${y}</option>`);
+return `<header><h1>حساباتي الشهرية</h1><div class="bar"><button data-a="prev">→ السابق</button><select data-c="m" aria-label="الشهر">${AM.map((m,i)=>`<option value="${i}" ${sel(i,ym[1])}>${m}</option>`).join('')}</select><select data-c="y" aria-label="السنة">${yrs.join('')}</select><button data-a="next">التالي ←</button><button data-a="today">الشهر الحالي</button><select data-c="cur" aria-label="العملة"><option value="DH" ${sel(cur,'DH')}>درهم</option><option value="R" ${sel(cur,'R')}>ريال</option></select><button data-a="bk">نسخ احتياطي</button></div></header>`}
+function calView(){const N=dim(...ym),first=(new Date(ym[0],ym[1],1).getDay()+6)%7;let h=head()+`<button class="big" data-a="res">نتائج الشهر</button><div class="cal">`+DN.map(d=>`<div class="wd">${d}</div>`).join('');
+ for(let i=0;i<first;i++)h+='<div class="c pad"></div>';
+ for(const x of stats()){const t=n0.getFullYear()==ym[0]&&n0.getMonth()==ym[1]&&n0.getDate()==x.d;
+  h+=`<button class="c ${!x.r?'':x.df>0?'pos':x.df<0?'neg':''} ${t?'today':''}" data-a="day" data-d="${x.d}"><div class="hd"><b>${x.d}</b><span class="dn">${DN[(first+x.d-1)%7]}</span><span class="st">${!x.r?'':x.df>0?'▲ فائض':x.df<0?'▼ عجز':'＝ متعادل'}</span></div>`+(x.r?`<div class="ln"><span class="g">+ ${fmt(x.i)}</span><span class="rr">− ${fmt(x.o)}</span><b>${fmt(x.df)}</b></div>`:'<div class="mt">أضف بيانات اليوم</div>')+'</button>'}
+ return h+'</div>'}
+function resView(){const A=stats(),N=A.length;let I=0,O=0,R=0;A.forEach(x=>{I+=x.i;O+=x.o;if(x.r)R++});const D=I-O,T=I+O>0||R>0;
+ const msg=!T?'لم يتم تسجيل أي بيانات هاد الشهر بعد.':D>0?'مزيان! المداخيل ديالك كثر من المصاريف.':D<0?'المصاريف ديالك كثر من المداخيل هاد الشهر.':'المداخيل والمصاريف متساويين هاد الشهر.';
+ let h=head()+`<div class="bar noprint" style="margin-top:12px"><button data-a="cal">← الرجوع إلى التقويم</button><button data-a="print">طباعة التقرير</button></div><h2 style="margin-top:16px">نتائج شهر ${AM[ym[1]]} ${ym[0]}</h2>
+<div class="cards"><div class="card"><small>مجموع المداخيل</small><div class="num g">${fmt(I)}</div></div><div class="card"><small>مجموع المصاريف</small><div class="num rr">${fmt(O)}</div></div>
+<div class="card"><small>الفرق النهائي</small><div class="num ${D>0?'g':D<0?'rr':''}">${fmt(D)}</div><small>${D>0?'الباقي':D<0?'العجز':'المداخيل تساوي المصاريف'}</small></div>
+<div class="card"><small>الأيام المسجلة</small><div class="num">${R} من ${N} يوم</div></div></div><div class="msg">${msg}</div>
+<h3>التفصيل اليومي</h3><table><thead><tr><th>اليوم</th><th>مجموع المداخيل</th><th>مجموع المصاريف</th><th>الفرق</th></tr></thead><tbody>`;
+ A.forEach(x=>{h+=`<tr data-a="day" data-d="${x.d}"><td data-l="اليوم">${x.d} — ${DN[(new Date(ym[0],ym[1],x.d).getDay()+6)%7]}</td>`+(x.r?`<td data-l="مجموع المداخيل" class="g">${fmt(x.i)}</td><td data-l="مجموع المصاريف" class="rr">${fmt(x.o)}</td><td data-l="الفرق">${x.df>0?'+':''}${fmt(x.df)}</td>`:'<td colspan="3" class="mt">غير مسجل</td>')+'</tr>'});
+ h+=`</tbody><tfoot><tr><td data-l="المجموع">المجموع</td><td data-l="المداخيل">${fmt(I)}</td><td data-l="المصاريف">${fmt(O)}</td><td data-l="الفرق">${fmt(D)}</td></tr></tfoot></table>`;
+ /* history */
+ const ml=tx.filter(t=>t.date.startsWith(`${ym[0]}-${pad(ym[1]+1)}`)&&(flt.t=='all'||t.type==flt.t)&&(!flt.d||t.date==dk(flt.d))).sort((a,b)=>a.date<b.date?-1:1);
+ h+=`<h3>تفاصيل العمليات</h3><div class="bar noprint"><select data-c="ft"><option value="all">كل العمليات</option><option value="in" ${sel(flt.t,'in')}>المداخيل فقط</option><option value="out" ${sel(flt.t,'out')}>المصاريف فقط</option></select><select data-c="fd"><option value="">كل الأيام</option>${A.map(x=>`<option value="${x.d}" ${sel(flt.d,String(x.d))}>يوم ${x.d}</option>`).join('')}</select></div><div class="card" style="margin-top:8px">`+
+ (ml.length?ml.map(t=>{const [y,m,d]=t.date.split('-');return `<div class="row"><span>${+d}/${+m}/${y} <span class="tag ${t.type}">${t.type=='in'?'مدخول':'مصروف'}</span> ${E(t.desc||'')} <small class="mt">${E(t.cat||'')}</small></span><b class="${t.type=='in'?'g':'rr'}">${t.type=='in'?'+':'−'} ${fmt(t.riyals)}</b></div>`}).join(''):'<div class="mt">لا توجد عمليات مطابقة.</div>')+'</div>';
+ /* insights */
+ const RD=A.filter(x=>x.r),mx=(k)=>RD.reduce((b,x)=>(!b||x[k]>b[k])?x:b,null),hi=mx('i'),ho=mx('o'),hd=mx('df');
+ const cc={};tx.filter(t=>t.type=='out'&&t.cat&&t.date.startsWith(`${ym[0]}-${pad(ym[1]+1)}`)).forEach(t=>cc[t.cat]=(cc[t.cat]||0)+1);const tc=Object.entries(cc).sort((a,b)=>b[1]-a[1])[0];
+ const I2=(t,v,e)=>`<div class="card"><b>${t}</b><div>${v}</div><small>${e}</small></div>`;
+ h+='<h3>ملاحظات الشهر</h3>';
+ h+=RD.length?`<div class="ins">`+I2('أعلى يوم مداخيل',hi&&hi.i>0?`يوم ${hi.d}: ${fmt(hi.i)}`:'—','اليوم الذي دخل فيه أكبر مبلغ.')+I2('أعلى يوم مصاريف',ho&&ho.o>0?`يوم ${ho.d}: ${fmt(ho.o)}`:'—','اليوم الذي صرفتي فيه أكثر.')+I2('أفضل فرق إيجابي',hd&&hd.df>0?`يوم ${hd.d}: +${fmt(hd.df)}`:'—','اليوم الذي بقى فيه أكبر مبلغ.')+I2('الأيام المسجلة',`${R} يوم`,'عدد الأيام التي سجلتي فيها بياناتك.')+I2('متوسط المداخيل اليومي',fmt(Math.round(I/RD.length)),'المجموع مقسوم على الأيام المسجلة فقط.')+I2('متوسط المصاريف اليومي',fmt(Math.round(O/RD.length)),'المجموع مقسوم على الأيام المسجلة فقط.')+I2('أكثر صنف مصاريف',tc?`${E(tc[0])} (${tc[1]} مرات)`:'—','الصنف الذي تكرر أكثر في المصاريف.')+'</div>':'<div class="card mt">سجّل بيانات بعض الأيام لتظهر الملاحظات.</div>';
+ /* chart */
+ const CD=A.filter(x=>x.i||x.o),M=Math.max(1,...A.map(x=>Math.max(x.i,x.o)));
+ h+='<h3>مقارنة المداخيل والمصاريف</h3><div class="card">'+(CD.length<2?'<div class="mt">لا توجد بيانات كافية للرسم البياني. سجّل عمليات في يومين على الأقل.</div>':`<div class="lg"><span>المداخيل</span><span class="o">المصاريف</span></div><div class="chart">${A.map(x=>`<div class="col" title="يوم ${x.d}: مداخيل ${fmt(x.i)} / مصاريف ${fmt(x.o)}"><div class="bars"><i class="bi" style="height:${x.i/M*100}%"></i><i class="bo" style="height:${x.o/M*100}%"></i></div><small>${x.d}</small></div>`).join('')}</div>`)+'</div>';
+ return h}
+function sec(t,title,l,tot){const L=l.filter(x=>x.type==t),e=edit&&edit.type==t?edit:null,lab=t=='in'?'مدخول':'مصروف';
+ return `<div class="card" style="margin-bottom:12px"><h2>${title}: <span class="${t=='in'?'g':'rr'}">${fmt(tot)}</span></h2>`+L.map(x=>`<div class="row"><span>${E(x.desc||lab)} <small class="mt">${E(x.cat||'')}</small></span><span><b>${fmt(x.riyals)}</b>${x.cur!=cur?` <small class="mt">(${E(x.amt)} ${x.cur=='DH'?'درهم':'ريال'})</small>`:''} <button data-a="ed" data-id="${x.id}">تعديل</button> <button data-a="rm" data-id="${x.id}">حذف</button></span></div>`).join('')+
+ `<div class="frm" data-t="${t}"><input class="amt" inputmode="decimal" placeholder="المبلغ" aria-label="المبلغ" value="${e?E(e.amt):''}"><select class="cu"><option value="DH" ${sel(e?e.cur:cur,'DH')}>درهم</option><option value="R" ${sel(e?e.cur:cur,'R')}>ريال</option></select><input class="ds" placeholder="الوصف (اختياري)" value="${e?E(e.desc||''):''}"><input class="ct" list="cats" placeholder="الصنف (اختياري)" value="${e?E(e.cat||''):''}"><span class="err"></span><button class="pri" data-a="add" data-t="${t}">${e?'تحديث':'+ إضافة '+lab}</button>${e?'<button data-a="cancel">إلغاء</button>':''}</div></div>`}
+function dayDlg(){const k=dk(day),l=dt(k),i=S(l,'in'),o=S(l,'out'),d=i-o;
+ return `<div class="ov"><div class="sh"><h2>بيانات يوم ${day} — ${AM[ym[1]]}</h2><datalist id="cats">${CATS.map(c=>`<option value="${c}">`).join('')}</datalist>${sec('in','المداخيل',l,i)}${sec('out','المصاريف',l,o)}<div class="card"><h2>نتيجة اليوم</h2><div class="sum"><div>مجموع المداخيل<br><b class="g">${fmt(i)}</b></div><div>مجموع المصاريف<br><b class="rr">${fmt(o)}</b></div><div>${d<0?'العجز':'الباقي'}<br><b>${fmt(d)}</b></div></div></div><div class="act"><button class="pri" data-a="save">حفظ بيانات اليوم</button><button data-a="close">الرجوع إلى الشهر</button></div></div></div>`}
+function bkDlg(){return `<div class="ov"><div class="sh"><h2>النسخ الاحتياطي والتصدير</h2><p class="mt">بياناتك محفوظة في هذا المتصفح وعلى هذا الجهاز فقط، ولا تتزامن تلقائيًا مع أجهزة أخرى. احتفظ بنسخة احتياطية.</p>
+<div class="bar"><button data-a="bjson">عرض نسخة JSON</button><button data-a="bcsv">عرض ملف CSV</button><button data-a="copy">نسخ النص</button><button data-a="dl">تنزيل</button></div><textarea id="out" readonly placeholder="اضغط على عرض نسخة JSON أو CSV">${E(bk)}</textarea>
+<h3>استرجاع نسخة</h3><input type="file" accept=".json,application/json" data-c="file"><textarea id="inp" placeholder="ألصق نسخة JSON هنا"></textarea><span class="err" id="rerr"></span>
+<div class="act"><button data-a="restore" class="${rc?'pri':''}">${rc?'تأكيد: استبدال كل البيانات الحالية':'استرجاع'}</button><button data-a="close">إغلاق</button></div></div></div>`}
+function render(){$('#app').innerHTML=view=='cal'?calView():resView();$('#dlg').innerHTML=dlg=='day'?dayDlg():dlg=='bk'?bkDlg():''}
+/* ---------- actions ---------- */
+const shift=n=>{ym=[ym[0]+Math.floor((ym[1]+n)/12),(ym[1]+n+120)%12];flt.d=''};
+function csv(){const q=s=>`"${String(s||'').replace(/"/g,'""')}"`;return '\ufeff'+['التاريخ,النوع,الوصف,الصنف,المبلغ الأصلي,العملة الأصلية,بالريال'].concat([...tx].sort((a,b)=>a.date<b.date?-1:1).map(t=>[t.date,t.type=='in'?'مدخول':'مصروف',q(t.desc),q(t.cat),t.amt,t.cur=='DH'?'درهم':'ريال',t.riyals].join(','))).join('\n')}
+const json=()=>JSON.stringify({app:'hisabati',v:1,tx,days:[...days]},null,1);
+function valid(o){if(!o||o.app!='hisabati'||!Array.isArray(o.tx)||!Array.isArray(o.days))return false;
+ return o.tx.every(t=>t&&typeof t.id=='string'&&/^\d{4}-\d{2}-\d{2}$/.test(t.date)&&(t.type=='in'||t.type=='out')&&Number.isInteger(t.riyals)&&t.riyals>0&&(t.cur=='DH'||t.cur=='R'))&&o.days.every(d=>/^\d{4}-\d{2}-\d{2}$/.test(d))}
+const toast=m=>{const e=$('.err');if(e)e.textContent=m};
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+ if(a=='prev')shift(-1);else if(a=='next')shift(1);else if(a=='today'){ym=[n0.getFullYear(),n0.getMonth()]}
+ else if(a=='res')view='res';else if(a=='cal')view='cal';else if(a=='print')return window.print();
+ else if(a=='day'){day=+b.dataset.d;dlg='day';edit=null}
+ else if(a=='close'){dlg=null;edit=null;rc=false}
+ else if(a=='save'){const k=dk(day);days.add(k);await put('days',{date:k});dlg=null}
+ else if(a=='ed'){edit=tx.find(x=>x.id==b.dataset.id)}else if(a=='cancel')edit=null;
+ else if(a=='rm'){await del('tx',b.dataset.id);tx=tx.filter(x=>x.id!=b.dataset.id);edit=null}
+ else if(a=='add'){const t=b.dataset.t,f=document.querySelector(`.frm[data-t="${t}"]`),c=f.querySelector('.cu').value,am=nz(f.querySelector('.amt').value),r=toR(am,c);
+  if(!r||r<=0){f.querySelector('.err').textContent=c=='DH'?'أدخل مبلغًا صحيحًا أكبر من 0 (بمضاعفات 0.05 درهم)':'أدخل مبلغًا صحيحًا بالريال (عدد صحيح أكبر من 0)';return}
+  const o={id:edit&&edit.type==t?edit.id:uid(),date:dk(day),type:t,riyals:r,cur:c,amt:am,desc:f.querySelector('.ds').value.trim(),cat:f.querySelector('.ct').value.trim()};
+  await put('tx',o);const i=tx.findIndex(x=>x.id==o.id);i<0?tx.push(o):tx[i]=o;edit=null}
+ else if(a=='bk'){dlg='bk';rc=false}
+ else if(a=='bjson'){bk=json();$('#out').value=bk;return}else if(a=='bcsv'){bk=csv();$('#out').value=bk;return}
+ else if(a=='copy'){const o=$('#out');o.select();try{await navigator.clipboard.writeText(o.value)}catch(_){document.execCommand&&document.execCommand('copy')}return}
+ else if(a=='dl'){const o=$('#out').value;if(!o)return;const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([o]));l.download=o.startsWith('\ufeff')?'hisabati.csv':'hisabati-backup.json';l.click();return}
+ else if(a=='restore'){let o;try{o=JSON.parse($('#inp').value)}catch(_){}
+  if(!valid(o)){$('#rerr').textContent='النسخة غير صالحة. تأكد من نسخ ملف JSON كاملًا من هذا التطبيق.';rc=false;return}
+  if(!rc){rc=true;render();$('#inp').value=JSON.stringify(o);return}
+  await clr('tx');await clr('days');tx=o.tx;days=new Set(o.days);for(const t of tx)await put('tx',t);for(const d of days)await put('days',{date:d});rc=false;dlg=null}
+ render()});
+document.addEventListener('change',async e=>{const c=e.target.dataset.c,v=e.target.value;if(!c)return;
+ if(c=='m')ym[1]=+v;else if(c=='y')ym[0]=+v;else if(c=='cur'){cur=v;put('prefs',{k:'cur',v})}else if(c=='ft')flt.t=v;else if(c=='fd')flt.d=v;
+ else if(c=='file'){const f=e.target.files[0];if(f)$('#inp').value=await f.text();return}
+ render()});
+(async()=>{tx=await all('tx');days=new Set((await all('days')).map(d=>d.date));const p=(await all('prefs')).find(x=>x.k=='cur');if(p)cur=p.v;render()})();
+</script></body></html>
